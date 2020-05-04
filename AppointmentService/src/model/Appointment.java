@@ -99,21 +99,20 @@ public class Appointment {
 				String appointmentDate = rs.getString("appointmentDate");
 				String appointmentTime = rs.getString("appointmentTime");
 
-				output += "<td>" + patientID + "</td>";
+				output +="<tr><td><input id=\"hidAppIDUpdate\" name=\"hidAppIDUpdate\" type=\"hidden\" value=\""  
+					   + appointmentID + "\">"
+					   + patientID + "</td>";
 				output += "<td>" + doctorID + "</td>";   
 				output += "<td>" + appointmentDate + "</td>"; 
 				output += "<td>" + appointmentTime + "</td>";
 				
 			
-				output += "<td><input name=\"btnUpdate\" "  
-						   + " type=\"button\" value=\"Update\"></td>"   
-						   + "<td><form method=\"post\" action=\"hospitals.jsp\">"
-					       + "<input name=\"btnRemove\" "
-						   + " type=\"submit\" value=\"Remove\" class=\"btn btn-danger\">"
-					       + "<input name=\"appointmentID\" type=\"hidden\" "   
-						   + " value=\"" + appointmentID + "\">" 
-					       + "</form></td></tr>";    
-
+				output += "<td><input name='btnUpdate' type='button' value='Update' "
+		         		+ "class='btnUpdate btn btn-secondary'></td>"
+		         		+ "<td><input name='btnRemove' type='button'"
+		         		+ "value='Remove'"
+		         		+ "class='btnRemove btn btn-danger' data-appid='"    
+		         		+ appointmentID + "'>" + "</td></tr>";	
 			}
 
 			con.close();
