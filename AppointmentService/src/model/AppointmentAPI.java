@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap; 
 import java.util.Map; 
 import java.util.Scanner;
+import model.Appointment;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/AppointmentAPI")
 public class AppointmentAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	Appointment appointmentobj = new Appointment();
+	
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -30,19 +34,18 @@ public class AppointmentAPI extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
-
-		Appointment appointmentObj = new Appointment();
 		
-		String output = appointmentObj.insertAppointments(request.getParameter("patientID"),
+
+		
+		
+		String output = appointmentobj .insertAppointments(request.getParameter("patientID"),
 				request.getParameter("doctorID"),     
 				request.getParameter("appointmentDate"),       
 				request.getParameter("appointmentTime"));
@@ -55,10 +58,10 @@ public class AppointmentAPI extends HttpServlet {
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Map paras = getParasMap(request);
-		Appointment appointmentObj = new Appointment();
+		Map paras = getParasMap(request); 
 		
-		 String output = appointmentObj.updateAppointments(paras.get("hidAppIDSave").toString(),
+		
+		 String output = appointmentobj .updateAppointments(paras.get("hidAppIDSave").toString(),
 				 paras.get("patientID").toString(),     
 				 paras.get("doctorID").toString(),        
 				 paras.get("appointmentDate").toString(),        
@@ -66,21 +69,6 @@ public class AppointmentAPI extends HttpServlet {
 		 
 		 response.getWriter().write(output);
 	}
-
-	/**
-	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		Map paras = getParasMap(request); 
-		Appointment appointmentObj = new Appointment();
-		
-		String output = appointmentObj.deleteAppointments(paras.get("appointmentID").toString()); 
-		
-		response.getWriter().write(output);
-	}
-	
 	private static Map getParasMap(HttpServletRequest request) 
 	{
 		Map<String, String> map = new HashMap<String, String>();  
@@ -107,5 +95,20 @@ public class AppointmentAPI extends HttpServlet {
 		}
 		return map;
 	}
+
+	/**
+	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
+	 */
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		Map paras = getParasMap(request); 
+		
+		String output = appointmentobj .deleteAppointments(paras.get("appointmentID").toString()); 
+		
+		response.getWriter().write(output);
+	}
+	
+	
 
 }
