@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+
 public class Appointment {
 
 
@@ -56,8 +59,8 @@ public class Appointment {
 			preparedStmt.execute();
 			con.close();
 			
-			String newApp = readAppointments();    
-		    output = "{\"status\":\"success\", \"data\": \"" +   newApp + "\"}";
+			String newAppointment = readAppointments();    
+		    output = "{\"status\":\"success\", \"data\": \"" +   newAppointment + "\"}";
 			
 			} 
 			catch (Exception e)
@@ -159,15 +162,15 @@ public class Appointment {
 			 preparedStmt.execute(); 
 			 con.close();
 
-			 String newApp = readAppointments();    
-			 output = "{\"status\":\"success\", \"data\": \"" + newApp + "\"}";  
+			 String newAppointment = readAppointments();    
+			 output = "{\"status\":\"success\", \"data\": \"" + newAppointment + "\"}";  
 		
 		}
 
 		catch (Exception e)
 		{
 
-			output = "An error occurred while updating the appointment details.";
+			output = "{\"status\":\"error\", \"data\":\"Error while updating the Appointment.\"}";
 			System.err.println(e.getMessage());
 		}
 		
@@ -198,8 +201,8 @@ public class Appointment {
 
 			con.close();
 			
-			String newApp = readAppointments();    
-			output = "{\"status\":\"success\", \"data\": \"" + newApp + "\"}";  
+			String newAppointment = readAppointments();    
+			output = "{\"status\":\"success\", \"data\": \"" + newAppointment + "\"}";  
 			
 			
 		} catch (Exception e) {
