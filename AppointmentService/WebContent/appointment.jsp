@@ -17,19 +17,20 @@
 			<div class="col-6">
 				<h1>Appointment Management</h1>
 				<br>
-				<form id="formItem" name="formItem">
+				<form id="formAppointment" name="formAppointment">
 					Patient ID: <input id="patientID" name="patientID" type="text"
-						class="form-control form-control-sm"> <br>Doctor ID:
+						class="form-control form-control-sm"> <br>
+					Doctor ID:
 					<input id="doctorID" name="doctorID" type="text"
-						class="form-control form-control-sm"> <br>Appointment
-					Date: <input id="appointmentDate" name="appointmentDate"
-						type="text" class="form-control form-control-sm"> <br>Appointment
-					Time: <input id="appointmentTime" name="AppointmentTime"
-						type="text" class="form-control form-control-sm"> <input
-						id="btnSave" name="btnSave" type="button" value="Save"
-						class="btn btn-primary"> <input type="hidden"
-						id="hidAppIDSave" name="hidAppIDSave" value="">
+						class="form-control form-control-sm"> <br>
+					Appointment Date: <input id="appointmentDate" name="appointmentDate"
+						type="text" class="form-control form-control-sm"> <br>
+					Appointment Time: <input id="appointmentTime" name="appointmentTime"
+						type="text" class="form-control form-control-sm">
+					 <input id="btnSave" name="btnSave" type="button" value="Save" class="btn btn-primary">
+					 <input type="hidden" id="hidAppIDSave" name="hidAppIDSave" value="">
 				</form>
+				
 				<div id="alertSuccess" class="alert alert-success"></div>
 				<div id="alertError" class="alert alert-danger"></div>
 				<br>
@@ -37,7 +38,7 @@
 				<div id="divAppGrid">
 					<%
 						Appointment appointmentObj = new Appointment();
-					out.print(appointmentObj.readAppointments());
+						out.print(appointmentObj.readAppointments());
 					%>
 				</div>
 			</div>

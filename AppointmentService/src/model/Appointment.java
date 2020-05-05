@@ -60,7 +60,7 @@ public class Appointment {
 			con.close();
 			
 			String newAppointment = readAppointments();    
-		    output = "{\"status\":\"success\", \"data\": \"" +   newAppointment + "\"}";
+		    output = "{\"status\":\"success\", \"data\": \"" + newAppointment + "\"}";
 			
 			} 
 			catch (Exception e)
@@ -88,7 +88,7 @@ public class Appointment {
 			}
 			
 			
-			output = "<table border=\'1\'><tr><th>Patient ID</th><th>Doctor ID</th><th>Appointment Date</th><th>Appointment Time</th> <th>Update</th><th>Remove</th></tr>"; 
+			output = "<table border=\'1\'><tr><th>Patient ID</th><th>Doctor ID</th><th>Appointment Date</th><th>Appointment Time</th><th>Update</th><th>Remove</th></tr>"; 
 							
 
 			String query = "select * from appointment";
@@ -105,17 +105,15 @@ public class Appointment {
 				String appointmentDate = rs.getString("appointmentDate");
 				String appointmentTime = rs.getString("appointmentTime");
 
-				output +="<tr><td><input id='hidAppIDUpdate' name='hidAppIDUpdate' type='hidden' value='"  
-					   + appointmentID + "\'>"
-					   + patientID + "</td>";
-				output += "<td>" + doctorID + "</td>";   
-				output += "<td>" + appointmentDate + "</td>"; 
-				output += "<td>" + appointmentTime + "</td>";
+				output += "<tr><td><input id='hidAppIDUpdate' name='hidAppIDUpdate' type='hidden' value='"+appointmentID
+						+ "'>" + patientID + "</td>";
+				output += "<td>" + doctorID + "</td>";
+				output += "<td>" + appointmentDate + "</td>";   
+				output += "<td>" + appointmentTime + "</td>"; 
 				
-			
-				output += "<td><input name='btnUpdate' type='button' value='Update' class='btnUpdate btn btn-secondary'></td>"
-		         			+ "<td><input name='btnRemove' type='button' value='Remove' class='btnRemove btn btn-danger' data-appid='"
-		         			+ appointmentID + "'>" + "</td></tr>";	
+				output +=  "<td><input name='btnUpdate' type='button'  value='Update' class='btnUpdate btn btn-secondary'></td>"
+						+ "<td><input name='btnRemove' type='button' value='Remove' class='btnRemove btn btn-danger' data-appid='" 
+						+ appointmentID + "'>" + "</td></tr>"; 
 			}
 
 			con.close();

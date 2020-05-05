@@ -77,6 +77,49 @@ $(document).on("click", ".btnRemove", function(event)
 	
 });
 
+
+function onAppSaveComplete(response, status) 
+{
+	
+	if (status == "success") 
+	{
+		
+		var resultSet = JSON.parse(response); 
+
+		if (resultSet.status.trim() == "success")   
+		{
+			
+			$("#alertSuccess").text("Successfully saved.");    
+			$("#alertSuccess").show(); 
+			
+			$("#divAppGrid").html(resultSet.data);  
+			
+		}
+		else if (resultSet.status.trim() == "error") 
+		{
+			
+			$("#alertError").text(resultSet.data);    
+			$("#alertError").show();   
+		} 
+			
+	}else if (status == "error")  
+		{
+			
+			$("#alertError").text("Error while saving.");   
+			$("#alertError").show();  
+			
+		}else  
+		{
+			
+			$("#alertError").text("Unknown error while saving..");   
+			$("#alertError").show(); 
+			
+		}
+	
+			$("#hidAppIDSave").val("");  
+			$("#formAppointment")[0].reset(); 
+	}
+
 	function onAppDeleteComplete(response, status) 
 	{
 		if (status == "success")  
@@ -127,7 +170,7 @@ function validateAppForm()
 		return "Insert Doctor ID.";  
 	} 
 	 
-	if ($("#appointmentdate").val().trim() == "") 
+	if ($("#appointmentDate").val().trim() == "") 
 	{   
 		return "Insert Appointment Date."; 
 	} 
@@ -141,45 +184,6 @@ function validateAppForm()
 } 
 
 
-function onAppSaveComplete(response, status) 
-{
-	
-	if (status == "success") 
-	{
-		
-		var resultSet = JSON.parse(response); 
-
-		if (resultSet.status.trim() == "success")   
-		{
-			
-			$("#alertSuccess").text("Successfully saved.");    
-			$("#alertSuccess").show(); 
-			
-			$("#divAppGrid").html(resultSet.data);  
-			
-		}else if (resultSet.status.trim() == "error") 
-		{
-			
-			$("#alertError").text(resultSet.data);    
-			$("#alertError").show();   } 
-			
-		}else if (status == "error")  
-		{
-			
-			$("#alertError").text("Error while saving.");   
-			$("#alertError").show();  
-			
-		}else  
-		{
-			
-			$("#alertError").text("Unknown error while saving..");   
-			$("#alertError").show(); 
-			
-		}
-	
-			$("#hidHospIDSave").val("");  
-			$("#formHospital")[0].reset(); 
-	}
 
 
 

@@ -42,8 +42,6 @@ public class AppointmentAPI extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-
-		
 		
 		String output = appointmentobj .insertAppointments(request.getParameter("patientID"),
 				request.getParameter("doctorID"),     
