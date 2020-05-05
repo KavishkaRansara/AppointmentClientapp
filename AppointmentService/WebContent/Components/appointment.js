@@ -1,10 +1,8 @@
 $(document).ready(function()
 {  
-	if ($("#alertSuccess").text().trim() == "") 
-	{   
-		$("#alertSuccess").hide();  
-	}  
+	$("#alertSuccess").hide();
 	$("#alertError").hide();
+	
 }); 
 
 
@@ -23,7 +21,25 @@ $(document).on("click", "#btnSave", function(event)
 				 return;  
 			 } 
 			 
-			 $("#formappointment").submit();
+			
+			 var type = ($("#hidAppIDSave").val() == "") ? "POST" : "PUT";  
+			 
+			 $.ajax( 
+			 {
+				 
+				 url : "AppointmentAPI",
+				 type : type, 
+				 data : $("#formAppointment").serialize(), 
+				 dataType : "text", 
+				 complete : function(response, status) 
+				 {
+					 
+					 onAppSaveComplete(response.responseText, status);  
+					 
+				 }
+			 
+		 });
+			 
 }); 
 
 
@@ -35,7 +51,69 @@ $(document).on("click", ".btnUpdate", function(event)
 			$("#appointmentDate").val($(this).closest("tr").find('td:eq(2)').text());
 			$("#appointmentTime").val($(this).closest("tr").find('td:eq(3)').text()); 
 			
-		}); 
+}); 
+
+$(document).on("click", ".btnRemove", function(event) 
+		{
+	
+				$.ajax(  
+						
+						{
+							
+							url : "AppointmentAPI",
+							type : "DELETE",   
+							data : "appointmentID=" + $(this).data("appid"),  
+							dataType : "text",
+							complete : function(response, status)  
+							{
+								
+								onAppDeleteComplete(response.responseText, status);
+								
+							}
+							
+						
+				});
+	
+	
+});
+
+	function onAppDeleteComplete(response, status) 
+	{
+		if (status == "success")  
+		{
+			
+			var resultSet = JSON.parse(response);
+			
+			
+			if (resultSet.status.trim() == "success")   
+			{
+				
+				$("#alertSuccess").text("Successfully deleted.");    
+				$("#alertSuccess").show(); 
+				
+				$("#divAppGrid").html(resultSet.data);   
+			}else if (resultSet.status.trim() == "error")   
+			{
+				
+				$("#alertError").text(resultSet.data);    
+				$("#alertError").show(); 
+			}	
+				
+			}	else if (status == "error")  
+			{
+				
+				$("#alertError").text("Error while deleting.");   
+				$("#alertError").show();  
+				
+			}else
+			{
+				
+				$("#alertError").text("Unknown error while deleting..");   
+				$("#alertError").show(); 
+				
+			}	
+	}	
+			
 
 function validateAppForm()
 {   
@@ -61,5 +139,47 @@ function validateAppForm()
 	 
 	 return true; 
 } 
+
+
+function onAppSaveComplete(response, status) 
+{
+	
+	if (status == "success") 
+	{
+		
+		var resultSet = JSON.parse(response); 
+
+		if (resultSet.status.trim() == "success")   
+		{
+			
+			$("#alertSuccess").text("Successfully saved.");    
+			$("#alertSuccess").show(); 
+			
+			$("#divAppGrid").html(resultSet.data);  
+			
+		}else if (resultSet.status.trim() == "error") 
+		{
+			
+			$("#alertError").text(resultSet.data);    
+			$("#alertError").show();   } 
+			
+		}else if (status == "error")  
+		{
+			
+			$("#alertError").text("Error while saving.");   
+			$("#alertError").show();  
+			
+		}else  
+		{
+			
+			$("#alertError").text("Unknown error while saving..");   
+			$("#alertError").show(); 
+			
+		}
+	
+			$("#hidHospIDSave").val("");  
+			$("#formHospital")[0].reset(); 
+	}
+
 
 
