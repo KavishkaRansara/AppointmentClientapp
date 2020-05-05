@@ -51,14 +51,19 @@ public class Appointment {
 			preparedStmt.setString(3, dID);
 			preparedStmt.setString(4, appDate);
 			preparedStmt.setString(5, appTime);
+			
+			
 			preparedStmt.execute();
 			con.close();
-			output = "Inserted successfully"; 
-
+			
+			String newApp = readAppointments();    
+		    output = "{\"status\":\"success\", \"data\": \"" +   newApp + "\"}";
 			
 			} 
-			catch (Exception e) {
-			output = "Error while inserting the appointment details.";
+			catch (Exception e)
+			{
+			output = "{\"status\":\"error\", \"data\":"
+						+"\"Error while inserting the appointment details.\"}";
 			System.err.println(e.getMessage());
 			}
 			return output;
@@ -78,20 +83,18 @@ public class Appointment {
 				return "Error while connecting to the database for reading the appointmentdetails.";
 
 			}
-			output = "<table border=\"1\"><tr>"
-					+ "<th>Patient ID</th>"
-					+ "<th>Doctor ID</th>"
-					+ "<th>Appointment Date</th>"
-					+ "<th>Appointment Time</th>"
-					+ "<th>Update</th>"
-					+ "<th>Remove</th></tr>"; 
+			
+			
+			output = "<table border=\'1\'><tr><th>Patient ID</th><th>Doctor ID</th><th>Appointment Date</th><th>Appointment Time</th> <th>Update</th><th>Remove</th></tr>"; 
+							
 
 			String query = "select * from appointment";
 
 			java.sql.Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 
-			while (rs.next()) {
+			while (rs.next())
+			{
 
 				String appointmentID = Integer.toString(rs.getInt("appointmentID"));
 				String patientID = rs.getString("patientID");
@@ -99,20 +102,17 @@ public class Appointment {
 				String appointmentDate = rs.getString("appointmentDate");
 				String appointmentTime = rs.getString("appointmentTime");
 
-				output +="<tr><td><input id=\"hidAppIDUpdate\" name=\"hidAppIDUpdate\" type=\"hidden\" value=\""  
-					   + appointmentID + "\">"
+				output +="<tr><td><input id='hidAppIDUpdate' name='hidAppIDUpdate' type='hidden' value='"  
+					   + appointmentID + "\'>"
 					   + patientID + "</td>";
 				output += "<td>" + doctorID + "</td>";   
 				output += "<td>" + appointmentDate + "</td>"; 
 				output += "<td>" + appointmentTime + "</td>";
 				
 			
-				output += "<td><input name='btnUpdate' type='button' value='Update' "
-		         		+ "class='btnUpdate btn btn-secondary'></td>"
-		         		+ "<td><input name='btnRemove' type='button'"
-		         		+ "value='Remove'"
-		         		+ "class='btnRemove btn btn-danger' data-appid='"    
-		         		+ appointmentID + "'>" + "</td></tr>";	
+				output += "<td><input name='btnUpdate' type='button' value='Update' class='btnUpdate btn btn-secondary'></td>"
+		         			+ "<td><input name='btnRemove' type='button' value='Remove' class='btnRemove btn btn-danger' data-appid='"
+		         			+ appointmentID + "'>" + "</td></tr>";	
 			}
 
 			con.close();
@@ -159,15 +159,18 @@ public class Appointment {
 			 preparedStmt.execute(); 
 			 con.close();
 
-			output = "Appointment details update successfully.";
+			 String newApp = readAppointments();    
+			 output = "{\"status\":\"success\", \"data\": \"" + newApp + "\"}";  
 		
 		}
 
-		catch (Exception e) {
+		catch (Exception e)
+		{
 
 			output = "An error occurred while updating the appointment details.";
 			System.err.println(e.getMessage());
 		}
+		
 		return output;
 	}
 
@@ -194,14 +197,17 @@ public class Appointment {
 			preparedStmt.execute();
 
 			con.close();
-
-			output = "Appointment details deleted successfully.";
+			
+			String newApp = readAppointments();    
+			output = "{\"status\":\"success\", \"data\": \"" + newApp + "\"}";  
+			
 			
 		} catch (Exception e) {
 
-			output = " An error occurred while deleting the Appointment details.";
+			output = "{\"status\":\"error\", \"data\": \"Error while deleting.\"}";
 			System.err.println(e.getMessage());
 		}
+		
 		return output;
 	}
 }
