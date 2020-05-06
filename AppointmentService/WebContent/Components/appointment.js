@@ -179,6 +179,7 @@ function validateAppForm()
 	if ($("#appointmentDate").val().trim() == "") 
 	{   
 		return "Insert Appointment Date."; 
+		
 	} 
 	 
 	 if ($("#appointmentTime").val().trim() == "") 
