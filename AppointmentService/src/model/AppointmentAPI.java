@@ -43,7 +43,7 @@ public class AppointmentAPI extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		String output = appointmentobj .insertAppointments(request.getParameter("patientID"),
+		String output = appointmentobj.insertAppointments(request.getParameter("patientID"),
 				request.getParameter("doctorID"),     
 				request.getParameter("appointmentDate"),       
 				request.getParameter("appointmentTime"));
@@ -59,14 +59,30 @@ public class AppointmentAPI extends HttpServlet {
 		Map paras = getParasMap(request); 
 		
 		
-		 String output = appointmentobj .updateAppointments(paras.get("hidAppIDSave").toString(),
+		 String output = appointmentobj.updateAppointments(paras.get("hidAppIDSave").toString(),
 				 paras.get("patientID").toString(),     
 				 paras.get("doctorID").toString(),        
 				 paras.get("appointmentDate").toString(),        
-				 paras.get("appointmentTime").toString());
+				 paras.get("appointmentTime").toString().replace("%3A",":"));
 		 
 		 response.getWriter().write(output);
 	}
+
+	/**
+	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
+	 */
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		Map paras = getParasMap(request); 
+		
+		String output = appointmentobj .deleteAppointments(paras.get("appointmentID").toString()); 
+		
+		response.getWriter().write(output);
+	}
+	
+	
+	
 	private static Map getParasMap(HttpServletRequest request) 
 	{
 		Map<String, String> map = new HashMap<String, String>();  
@@ -92,19 +108,6 @@ public class AppointmentAPI extends HttpServlet {
 			
 		}
 		return map;
-	}
-
-	/**
-	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		Map paras = getParasMap(request); 
-		
-		String output = appointmentobj .deleteAppointments(paras.get("appointmentID").toString()); 
-		
-		response.getWriter().write(output);
 	}
 	
 	
