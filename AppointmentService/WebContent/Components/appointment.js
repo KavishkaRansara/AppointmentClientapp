@@ -89,7 +89,7 @@ function onAppSaveComplete(response, status)
 
 
 
-
+//UPDATE
 $(document).on("click", ".btnUpdate", function(event) 
 		{     
 			$("#hidAppIDSave").val($(this).closest("tr").find('#hidAppIDUpdate').val());
